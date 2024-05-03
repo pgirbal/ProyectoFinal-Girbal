@@ -1,0 +1,18 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    {% for estudiante in estudiantes %}
+        <li>{{estudiante.nombre}} {{estudiante.apellido}}</li>
+        <button>
+            <a href="{% url 'estudiante' estudiante.id %}">Ver</a>
+            <a href="{% url 'estudiante_borrar' estudiante.id %}"> Eliminar</a>
+            <a href="{% url 'estudiante_editar' estudiante.id %}"> Editar</a>
+        </button>
+    {% endfor %}
+    <br>
+    <a href="{% url 'estudiante_crear' %}">Agregar otro estudiante</a>
+
+{% endblock %}

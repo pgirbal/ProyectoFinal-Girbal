@@ -1,0 +1,22 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+<div class="container">
+
+    <p><h4>Datos estudiante</h4></p>
+    
+    <p>Nombre: {{estudiante.nombre}}</p>
+    <p>Apellido: {{estudiante.apellido}}</p>
+    <p>E-mail: {{estudiante.email}}</p>
+
+    <p>
+        <a href="{% url 'estudiantes' %}">Regresar</a>
+    
+    </p>
+
+</div>
+
+{% endblock %}

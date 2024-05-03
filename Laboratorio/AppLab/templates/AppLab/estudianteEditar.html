@@ -1,0 +1,22 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+<h1> Editar Docente {{estudiante.nombre}} {{estudiante.apellido}} </h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {{form.as_p}}
+    
+    <input type="submit" value="Editar">
+</form>
+
+<p>
+    <a href="{% url 'estudiantes' %}">Regresar</a>
+
+</p>
+
+{% endblock %}

@@ -83,30 +83,38 @@ class DocenteDelete(LoginRequiredMixin, DeleteView):
     login_url = '/login'
 
 
-def estudiante(request):
+#Definición de estudiantes como CBV
 
-    if request.method == 'POST':
+class EstudianteListado(ListView):
+    model = Estudiante
+    context_object_name = "estudiantes"
+    template_name = "AppLab/estudianteListado.html"
 
-        miFormulario = FormularioEstudiante(request.POST)
+class EstudianteDetalle(DetailView):
+    model = Estudiante
+    context_object_name = "estudiante"
+    template_name = "AppLab/estudianteDetalle.html"
 
-        if miFormulario.is_valid():
+class EstudianteCreate(LoginRequiredMixin, CreateView):
+    model = Estudiante
+    template_name = "AppLab/estudianteCrear.html"
+    success_url = reverse_lazy('estudiantes')
+    fields = ['nombre', 'apellido', 'email']
+    login_url = '/login'
 
-            informacion = miFormulario.cleaned_data
+class EstudianteUpdate(LoginRequiredMixin, UpdateView):
+    model = Estudiante
+    template_name = "AppLab/estudianteEditar.html"
+    success_url = reverse_lazy('estudiantes')
+    fields = ['nombre', 'apellido', 'email']
+    login_url = '/login'
 
-            estudiante = Estudiante (nombre=informacion["nombre"], 
-                                     apellido=informacion["apellido"], 
-                                     email=informacion["email"],
-                                     )
+class EstudianteDelete(LoginRequiredMixin, DeleteView):
+    model = Estudiante
+    template_name = "AppLab/estudianteBorrar.html"
+    success_url = reverse_lazy('estudiantes')
+    login_url = '/login'
 
-            estudiante.save()
-
-            return render(request, "AppLab/inicio.html")
-        
-    else:
-
-        miFormulario= FormularioEstudiante() #Formulario vacío para construir el html
-
-    return render(request, "AppLab/estudiante.html", {"FormularioEstudiante": miFormulario})
 
 def buscar(request):
     practicas = None

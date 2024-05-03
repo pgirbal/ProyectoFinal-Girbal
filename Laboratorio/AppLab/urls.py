@@ -3,12 +3,12 @@ from AppLab import views
 from django.contrib.auth.views import LogoutView
 from .views import PracticaListado, PracticaCreate, PracticaDelete, PracticaDetalle, PracticaUpdate
 from .views import DocenteListado, DocenteCreate, DocenteDelete, DocenteDetalle, DocenteUpdate
+from .views import EstudianteListado, EstudianteCreate, EstudianteDelete, EstudianteDetalle, EstudianteUpdate
 
 urlpatterns = [
 
     path('', views.inicio, name="Inicio"),
     path('inicio/', views.inicio, name="Inicio"),
-    path('estudiante', views.estudiante, name="Estudiante"),
     path('buscar', views.buscar, name="Buscar"),
 
     #Path de prácticas
@@ -25,6 +25,14 @@ urlpatterns = [
     path('docenteCreate', DocenteCreate.as_view(), name = "docente_crear"),
     path('docenteUpdate/<int:pk>/', DocenteUpdate.as_view(), name = "docente_editar"),
     path('docenteDelete/<int:pk>/', DocenteDelete.as_view(), name = "docente_borrar"),
+
+
+    #Path de estudiantes
+    path('estudianteListado/', EstudianteListado.as_view(), name = "estudiantes"),
+    path('estudianteDetalle/<int:pk>/', EstudianteDetalle.as_view(), name = "estudiante"),
+    path('estudianteCreate', EstudianteCreate.as_view(), name = "estudiante_crear"),
+    path('estudianteUpdate/<int:pk>/', EstudianteUpdate.as_view(), name = "estudiante_editar"),
+    path('estudianteDelete/<int:pk>/', EstudianteDelete.as_view(), name = "estudiante_borrar"),
 
 
     path('login', views.login, name="Login"),

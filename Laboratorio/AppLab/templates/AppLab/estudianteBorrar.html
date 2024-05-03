@@ -1,0 +1,24 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+<h1> Eliminar Estudiante {{estudiante.apelllido}} </h1>
+
+<form action="" method="POST">
+
+    {% csrf_token %}
+
+    ¿Borrar estudiante {{estudiante.nombre}} {{estudiante.apellido}}?
+    <br>
+    <p style="color: red">¡¡CUIDADO!!</p> Esta acción no se puede deshacer.
+    <br>
+    <input type="submit" value="Eliminar">
+    <p>
+        <a href="{% url 'estudiantes' %}">Regresar</a>
+    
+    </p>
+</form>
+
+{% endblock %}

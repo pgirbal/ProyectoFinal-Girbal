@@ -1,0 +1,27 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    <h1>Inscripción docente a cargo de la práctica</h1>
+
+    {% if FormularioDocente.errors %}
+
+    <p style="color: red"> Están mal los datos, revisar </p>
+
+    {% endif %}
+
+
+    <form action=""    method="POST"> {% csrf_token %}
+
+        <table>
+
+            {{ FormularioDocente.as_table }}
+
+        </table>
+
+        <input type = "submit" value="Enviar">
+    </form>
+    
+{% endblock %}

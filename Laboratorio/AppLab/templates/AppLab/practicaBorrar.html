@@ -1,0 +1,24 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+<h1> Eliminar Práctica {{practica.nombre}} </h1>
+
+<form action="" method="POST">
+
+    {% csrf_token %}
+
+    ¿Borrar la práctica {{practica.nombre}} - Asignatura {{practica.asignatura}}?
+    <br>
+    <p style="color: red">¡¡CUIDADO!!</p> Esta acción no se puede deshacer.
+    <br>
+    <input type="submit" value="Eliminar">
+    <p>
+        <a href="{% url 'practicas' %}">Regresar</a>
+    
+    </p>
+</form>
+
+{% endblock %}

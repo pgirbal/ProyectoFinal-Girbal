@@ -1,0 +1,33 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    <h1>Búsqueda de prácticas por asignatura</h1>
+
+    <form method="get">
+        {{ FormularioBuscar.as_table }}
+        <button type="submit">Buscar</button>
+
+    </form>
+    
+    
+    {% if practicas %}
+    <h3>Resultados:</h3>
+        <ul>
+            {% for practica in practicas %}
+                <li>{{ practica.asignatura }} - {{ practica.nombre }} - {{ practica.fecha }}</li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        {% if request.GET.asignatura %}
+    
+            <p>No hay prácticas asociadas a esta asignatura</p>
+
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}

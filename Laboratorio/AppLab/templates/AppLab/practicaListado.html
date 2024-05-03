@@ -1,0 +1,18 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    {% for practica in practicas %}
+        <li>{{practica.nombre}}</li>
+        <button>
+            <a href="{% url 'practica' practica.id %}">Ver</a>
+            <a href="{% url 'practica_borrar' practica.id %}"> Eliminar</a>
+            <a href="{% url 'practica_editar' practica.id %}"> Editar</a>
+        </button>
+    {% endfor %}
+    <br>
+    <a href="{% url 'practica_crear' %}">Agregar otra práctica</a>
+
+{% endblock %}

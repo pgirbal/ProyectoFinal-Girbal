@@ -3,7 +3,12 @@
 {% load static %}
 
 {% block contenidoQueCambia %}
+    <div class="container text-center">
+        <h1>Cierre de sesión exitoso.</h1>
+    </div>
 
-    <h1>Cierre de sesión exitoso.</h1>
+    <div class="container text-center">
+        <p>¿Querés <a href="{% url 'login' %}">iniciar sesión</a> de nuevo?</p>
+    </div>
 
 {% endblock %}

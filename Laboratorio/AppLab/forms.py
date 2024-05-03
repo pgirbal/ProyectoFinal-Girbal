@@ -30,7 +30,7 @@ class FormularioBuscar(forms.Form):
 class FormularioRegistroUsuario(UserCreationForm):
     first_name = forms.CharField(label="Nombre", widget=forms.TextInput)
     last_name = forms.CharField(label="Apellido", widget=forms.TextInput)
-    email = forms.EmailField(widget=forms.EmailInput)
+    email = forms.EmailField()
     username = forms.CharField(max_length=20, label="Nombre de Usuario", widget=forms.TextInput)
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Repetir contraseña", widget=forms.PasswordInput)
@@ -40,3 +40,25 @@ class FormularioRegistroUsuario(UserCreationForm):
         fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
         # Saca los mensajes de ayuda
         help_texts = {k:"" for k in fields}
+
+
+class FormularioEdicionUsuario(UserChangeForm):
+    password = None
+    email = forms.EmailField()
+    first_name = forms.CharField(label="Nombre", widget=forms.TextInput)
+    last_name = forms.CharField(label="Apellido", widget=forms.TextInput)
+    username = forms.CharField(max_length=20, label="Nombre de Usuario", widget=forms.TextInput)
+
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name', 'username')
+
+
+class FormularioCambioPassword(PasswordChangeForm):
+    old_password = forms.CharField(label="Contraseña actual", widget=forms.PasswordInput)
+    new_password1 = forms.CharField(label="Nueva contraseña", widget=forms.PasswordInput)
+    new_password2 = forms.CharField(label="Repita nueva contraseña", widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('old_password', 'new_password1', 'new_password2')

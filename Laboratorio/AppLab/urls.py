@@ -4,12 +4,13 @@ from django.contrib.auth.views import LogoutView
 from .views import PracticaListado, PracticaCreate, PracticaDelete, PracticaDetalle, PracticaUpdate
 from .views import DocenteListado, DocenteCreate, DocenteDelete, DocenteDetalle, DocenteUpdate
 from .views import EstudianteListado, EstudianteCreate, EstudianteDelete, EstudianteDetalle, EstudianteUpdate
+from .views import Login, Registro, UsuarioEditar, PasswordCambio
 
 urlpatterns = [
 
-    path('', views.inicio, name="Inicio"),
-    path('inicio/', views.inicio, name="Inicio"),
-    path('buscar', views.buscar, name="Buscar"),
+    path('', views.inicio, name = "inicio"),
+    path('inicio', views.inicio, name = "inicio"),
+    path('buscar/', views.buscar, name = "buscar"),
 
     #Path de prácticas
     path('practicaListado/', PracticaListado.as_view(), name = "practicas"),
@@ -35,7 +36,10 @@ urlpatterns = [
     path('estudianteDelete/<int:pk>/', EstudianteDelete.as_view(), name = "estudiante_borrar"),
 
 
-    path('login', views.login, name="Login"),
-    path('registro', views.registro, name='Registro'),
-    path('logout', LogoutView.as_view(template_name='AppLab/logout.html'), name='Logout'),
+    path('login/', Login.as_view(), name = "login"),
+    path('registro/', Registro.as_view(), name = "registro"),
+    path('logout/', LogoutView.as_view(template_name='AppLab/logout.html'), name = "logout"),
+    path('edicionPerfil/', UsuarioEditar.as_view(), name = "editar_usuario"),
+    path('passwordCambio/', PasswordCambio.as_view(), name = "editar_password"),
+    path('passwordExitoso/', views.password_cambiado, name = "password_cambiado"),
 ]

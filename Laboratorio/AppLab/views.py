@@ -1,20 +1,68 @@
-from django.views.generic import TemplateView, ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-
-from django.shortcuts import render
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from AppLab.models import Estudiante, Practica, Docente
-from AppLab.forms import FormularioEstudiante, FormularioDocente, FormularioPractica, FormularioBuscar, FormularioRegistroUsuario
+from AppLab.forms import FormularioBuscar, FormularioRegistroUsuario, FormularioCambioPassword, FormularioEdicionUsuario
 
 # Create your views here.
 
 def inicio(request):
 
     return render(request, "AppLab/inicio.html")
+
+
+#Interacciones de usuario con su cuenta
+
+class Login(LoginView):
+    template_name = "AppLab/login.html"
+    fields = "__all__"
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('inicio')
+
+    def get_success_url(self):
+        return reverse_lazy('inicio')
+    
+
+class Registro(FormView):
+    template_name = "AppLab/registro.html"
+    form_class = FormularioRegistroUsuario
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('inicio')
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(Registro, self).form_valid(form)
+    
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('inicio')
+        return super(Registro, self).get(*args, **kwargs)
+    
+
+class UsuarioEditar(UpdateView):
+    form_class = FormularioEdicionUsuario
+    template_name = "AppLab/usuarioEditar.html"
+    success_url = reverse_lazy('inicio')
+
+    def get_object(self):
+        return self.request.user
+    
+
+class PasswordCambio(PasswordChangeView):
+    form_class = FormularioCambioPassword
+    template_name = "AppLab/passwordCambio.html"
+    success_url = reverse_lazy('password_cambiado')
+
+
+def password_cambiado(request):
+    return render(request, "AppLab/passwordExitoso.html", {})
+
 
 #Definición de prácticas como CBV
 
@@ -126,47 +174,3 @@ def buscar(request):
     miFormulario = FormularioBuscar()
     
     return render(request, "AppLab/buscar.html", {"FormularioBuscar": miFormulario, "practicas": practicas})
-
-
-def login_request(request):
-
-    if request.method == "POST":
-        form = AuthenticationForm(request, data = request.POST)
-
-        if form.is_valid():
-            usuario = form.cleaned_data.get('username')
-            contra = form.cleaned_data.get('password')
-
-            user = authenticate(username=usuario, password=contra)
-
-            if user is not None:
-                login(request, user)
-
-                return render(request, "AppLab/inicio.html", {"mensaje":f"¡Hola {usuario}!"})
-
-            else:
-
-                return render(request, "AppLab/inicio.html", {"mensaje":"Datos incorrectos, por favor intente nuevamente."})
-
-        else:
-            return render(request, "AppLab/inicio.html", {"mensaje":"Formulario erróneo."})
-
-    form = AuthenticationForm()
-
-    return render(request, "AppLab/login.html", {"form": form})
-
-def registro(request):
-
-    if request.method == "POST":
-        form = FormularioRegistroUsuario(request.POST)
-        if form.is_valid:
-
-            username = form.cleaned_data['username']
-            form.save()
-            return render(request, "AppLab/inicio.html", {"mensaje":"Usuario creado correctamente"})
-
-    else:
-        form = FormularioRegistroUsuario()
-
-    return render(request, "AppLab/registro.html", {'form': form})
-

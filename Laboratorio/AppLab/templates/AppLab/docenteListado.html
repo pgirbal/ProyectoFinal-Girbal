@@ -1,0 +1,18 @@
+{% extends "AppLab/padre.html" %}
+
+{% load static %}
+
+{% block contenidoQueCambia %}
+
+    {% for docente in docentes %}
+        <li>{{docente.nombre}} {{docente.apellido}}</li>
+        <button>
+            <a href="{% url 'docente' docente.id %}">Ver</a>
+            <a href="{% url 'docente_borrar' docente.id %}"> Eliminar</a>
+            <a href="{% url 'docente_editar' docente.id %}"> Editar</a>
+        </button>
+    {% endfor %}
+    <br>
+    <a href="{% url 'docente_crear' %}">Agregar otro docente</a>
+
+{% endblock %}

@@ -49,31 +49,39 @@ class PracticaDelete(LoginRequiredMixin, DeleteView):
     login_url = '/login'
 
 
-def docente(request):
 
-    if request.method == 'POST':
+#Definición de docentes como CBV
 
-        miFormulario = FormularioDocente(request.POST)
+class DocenteListado(ListView):
+    model = Docente
+    context_object_name = "docentes"
+    template_name = "AppLab/docenteListado.html"
 
-        if miFormulario.is_valid():
+class DocenteDetalle(DetailView):
+    model = Docente
+    context_object_name = "docente"
+    template_name = "AppLab/docenteDetalle.html"
 
-            informacion = miFormulario.cleaned_data
+class DocenteCreate(LoginRequiredMixin, CreateView):
+    model = Docente
+    template_name = "AppLab/docenteCrear.html"
+    success_url = reverse_lazy('docentes')
+    fields = ['nombre', 'apellido', 'legajo', 'email']
+    login_url = '/login'
 
-            docente = Docente (nombre=informacion["nombre"], 
-                                  apellido=informacion["apellido"], 
-                                  legajo=informacion["legajo"], 
-                                  email=informacion["email"],
-                                  )
+class DocenteUpdate(LoginRequiredMixin, UpdateView):
+    model = Docente
+    template_name = "AppLab/docenteEditar.html"
+    success_url = reverse_lazy('docentes')
+    fields = ['nombre', 'apellido', 'legajo', 'email']
+    login_url = '/login'
 
-            docente.save()
+class DocenteDelete(LoginRequiredMixin, DeleteView):
+    model = Docente
+    template_name = "AppLab/docenteBorrar.html"
+    success_url = reverse_lazy('docentes')
+    login_url = '/login'
 
-            return render(request, "AppLab/inicio.html")
-        
-    else:
-
-        miFormulario= FormularioDocente() #Formulario vacío para construir el html
-
-    return render(request, "AppLab/docente.html", {"FormularioDocente": miFormulario})
 
 def estudiante(request):
 
@@ -111,19 +119,6 @@ def buscar(request):
     
     return render(request, "AppLab/buscar.html", {"FormularioBuscar": miFormulario, "practicas": practicas})
 
-
-
-#def listadoDocentes(request):
- #   docentes = Docente.objects.all()
-  #  contexto = {"docentes":docentes}
-
-  #  return render(request, "AppLab/listadoDocentes.html", contexto)
-
-#def listadoEstudiantes(request):
- #   estudiantes = Estudiante.objects.all()
-  #  contexto = {"estudiantes":estudiantes}
-
-   # return render(request, "AppLab/listadoEstudiantes.html", contexto)
 
 def login_request(request):
 

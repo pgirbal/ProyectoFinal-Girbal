@@ -32,7 +32,10 @@
                             <li class="nav-item"><span class="text-light"> ¡Hola <strong>{{request.user.username}}</strong>!</span></li>
                             </div>
                             <li class="nav-item"><a class="navbar-brand" href="{% url 'editar_usuario' %}">Perfil</a></li>
-                            <li class="nav-item"><a class="navbar-brand" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                            <form action="{% url 'logout' %}" method="post" id="logoutForm">
+                                {% csrf_token %}
+                                <li class="nav-item"><a class="navbar-brand" onclick="document.getElementById('logoutForm').submit();">Cerrar sesión</a></li>
+                            </form>
                         {% else %}
                             <li class="nav-item"><a class="navbar-brand" href="{% url 'login' %}">Iniciar sesión</a></li>
                             <li class="nav-item"><a class="navbar-brand" href="{% url 'registro' %}">Registrate</a></li>       
@@ -48,7 +51,6 @@
                     <div class="col-lg-6">
                         <div class="text-center my-5">
                             <h1 class="display-5 fw-bolder text-white mb-2">Prácticas del Laboratorio de Ingeniería Química</h1>
-                            <p class="lead text-white-50 mb-4">Página de gestión de las prácticas que se realizan</p>
                             
                         </div>
                     </div>
@@ -157,6 +159,7 @@
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container px-5"><p class="m-0 text-center text-white">Copyright &copy; Laboratorio 2024 Girbal Paola</p></div>
+            <div class="container px-5"><p class="m-0 text-center text-white"><a class="navbar-brand" href="{% url 'admin:index' %}">Iniciar sesión como Administrador</a></p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

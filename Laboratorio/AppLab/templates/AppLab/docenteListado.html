@@ -3,7 +3,8 @@
 {% load static %}
 
 {% block contenidoQueCambia %}
-
+<div class="container text-center">
+    
     {% for docente in docentes %}
         <li>{{docente.nombre}} {{docente.apellido}}</li>
         <button>
@@ -14,5 +15,7 @@
     {% endfor %}
     <br>
     <a href="{% url 'docente_crear' %}">Agregar otro docente</a>
+
+</div>
 
 {% endblock %}

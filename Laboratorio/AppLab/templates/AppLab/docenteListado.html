@@ -3,19 +3,57 @@
 {% load static %}
 
 {% block contenidoQueCambia %}
-<div class="container text-center">
-    
-    {% for docente in docentes %}
-        <li>{{docente.nombre}} {{docente.apellido}}</li>
-        <button>
-            <a href="{% url 'docente' docente.id %}">Ver</a>
-            <a href="{% url 'docente_borrar' docente.id %}"> Eliminar</a>
-            <a href="{% url 'docente_editar' docente.id %}"> Editar</a>
-        </button>
-    {% endfor %}
-    <br>
-    <a href="{% url 'docente_crear' %}">Agregar otro docente</a>
 
+<style>
+    /* Anula el subrayado en los enlaces dentro de los botones */
+    .btn a {
+        text-decoration: none;
+    }
+
+     /* Estilo personalizado para el texto dentro de los botones */
+     .btn a {
+        color: white; /* Cambia este valor al color que desees */
+        font-size: 14px; /* Cambia este valor al tamaño de fuente que desees */
+        font-weight: bold; /* Cambia este valor al peso de fuente que desees */
+        /* Otros estilos que desees aplicar */
+    }
+
+    /* Estilos para el listado de docentes */
+    .docente-list {
+        list-style-type: none; /* Elimina las viñetas */
+        font-family: Arial, sans-serif; /* Cambia la fuente */
+        font-size: 20px; /* Cambia el tamaño de la fuente */
+        /* Otros estilos que desees aplicar */
+    }
+</style>
+
+<div class="container text-center">
+    <h1>Listado Docentes</h1>
 </div>
+
+<div class="container text-center">
+    <ul class="docente-list">
+        <br>
+        {% for docente in docentes %}
+            <li>{{docente.nombre}} {{docente.apellido}}</li>
+                <br>
+                <button class="btn btn-dark">
+                    <a href="{% url 'docente' docente.id %}" class="btn-link">Ver</a>
+                </button>
+                <button class="btn btn-dark">
+                    <a href="{% url 'docente_editar' docente.id %}" class="btn-link">Editar</a>
+                </button>
+                <button class="btn btn-dark">
+                    <a href="{% url 'docente_borrar' docente.id %}" class="btn-link">Eliminar</a>
+                </button>
+                <br>
+                <br>
+        {% endfor %}
+    </ul>
+    <br>
+    <a href="{% url 'docente_crear' %}" class="btn btn-success">Agregar otro docente</a>
+</div>
+
+
 
 {% endblock %}

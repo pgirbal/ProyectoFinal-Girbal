@@ -4,30 +4,28 @@
 
 {% block contenidoQueCambia %}
 
-    <h1>Búsqueda de prácticas por asignatura</h1>
+<div class="container text-center">
+<h1>Búsqueda de prácticas por asignatura</h1>
 
-    <form method="get">
-        {{ FormularioBuscar.as_table }}
-        <button type="submit">Buscar</button>
+<form method="get">
+    {{ FormularioBuscar.as_table }}
+    <button type="submit">Buscar</button>
+</form>
 
-    </form>
-    
-    
-    {% if practicas %}
+{% if practicas %}
     <h3>Resultados:</h3>
-        <ul>
-            {% for practica in practicas %}
-                <li>{{ practica.asignatura }} - {{ practica.nombre }} - {{ practica.fecha }}</li>
-            {% endfor %}
-        </ul>
-
-    {% else %}
-        {% if request.GET.asignatura %}
-    
-            <p>No hay prácticas asociadas a esta asignatura</p>
-
-        {% endif %}
-
+    <ul>
+        {% for practica in practicas %}
+            <li>{{ practica.asignatura }} - {{ practica.nombre }} - {{ practica.fecha }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    {% if request.GET.asignatura %}
+        <p>No hay prácticas asociadas a esta asignatura</p>
     {% endif %}
+{% endif %}
+
+</div>
+
 
 {% endblock %}

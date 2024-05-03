@@ -4,15 +4,54 @@
 
 {% block contenidoQueCambia %}
 
-    {% for estudiante in estudiantes %}
-        <li>{{estudiante.nombre}} {{estudiante.apellido}}</li>
-        <button>
-            <a href="{% url 'estudiante' estudiante.id %}">Ver</a>
-            <a href="{% url 'estudiante_borrar' estudiante.id %}"> Eliminar</a>
-            <a href="{% url 'estudiante_editar' estudiante.id %}"> Editar</a>
-        </button>
-    {% endfor %}
+<style>
+    /* Anula el subrayado en los enlaces dentro de los botones */
+    .btn a {
+        text-decoration: none;
+    }
+
+     /* Estilo personalizado para el texto dentro de los botones */
+     .btn a {
+        color: white; /* Cambia este valor al color que desees */
+        font-size: 14px; /* Cambia este valor al tamaño de fuente que desees */
+        font-weight: bold; /* Cambia este valor al peso de fuente que desees */
+        /* Otros estilos que desees aplicar */
+    }
+
+    /* Estilos para el listado de estudiantes */
+    .estudiante-list {
+        list-style-type: none; /* Elimina las viñetas */
+        font-family: Arial, sans-serif; /* Cambia la fuente */
+        font-size: 20px; /* Cambia el tamaño de la fuente */
+        /* Otros estilos que desees aplicar */
+    }
+</style>
+
+<div class="container text-center">
+    <h1>Listado Estudiantes</h1>
+</div>
+
+<div class="container text-center">
+    <ul class="estudiante-list">
+        <br>
+        {% for estudiante in estudiantes %}
+            <li>{{estudiante.nombre}} {{estudiante.apellido}}</li>
+                <br>
+                <button class="btn btn-dark">
+                    <a href="{% url 'estudiante' estudiante.id %}" class="btn-link">Ver</a>
+                </button>
+                <button class="btn btn-dark">
+                    <a href="{% url 'estudiante_editar' estudiante.id %}" class="btn-link">Editar</a>
+                </button>
+                <button class="btn btn-dark">
+                    <a href="{% url 'estudiante_borrar' estudiante.id %}" class="btn-link">Eliminar</a>
+                </button>
+                <br>
+                <br>
+        {% endfor %}
+    </ul>
     <br>
-    <a href="{% url 'estudiante_crear' %}">Agregar otro estudiante</a>
+    <a href="{% url 'estudiante_crear' %}" class="btn btn-success">Agregar otro estudiante</a>
+</div>
 
 {% endblock %}

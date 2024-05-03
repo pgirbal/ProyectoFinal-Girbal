@@ -4,15 +4,54 @@
 
 {% block contenidoQueCambia %}
 
-    {% for practica in practicas %}
-        <li>{{practica.nombre}}</li>
-        <button>
-            <a href="{% url 'practica' practica.id %}">Ver</a>
-            <a href="{% url 'practica_borrar' practica.id %}"> Eliminar</a>
-            <a href="{% url 'practica_editar' practica.id %}"> Editar</a>
-        </button>
-    {% endfor %}
+<style>
+    /* Anula el subrayado en los enlaces dentro de los botones */
+    .btn a {
+        text-decoration: none;
+    }
+
+     /* Estilo personalizado para el texto dentro de los botones */
+     .btn a {
+        color: white; /* Cambia este valor al color que desees */
+        font-size: 14px; /* Cambia este valor al tamaño de fuente que desees */
+        font-weight: bold; /* Cambia este valor al peso de fuente que desees */
+        /* Otros estilos que desees aplicar */
+    }
+
+    /* Estilos para el listado de prácticas */
+    .practica-list {
+        list-style-type: none; /* Elimina las viñetas */
+        font-family: Arial, sans-serif; /* Cambia la fuente */
+        font-size: 20px; /* Cambia el tamaño de la fuente */
+        /* Otros estilos que desees aplicar */
+    }
+</style>
+
+<div class="container text-center">
+    <h1>Listado Prácticas</h1>
+</div>
+
+<div class="container text-center">
+    <ul class="practica-list">
+        <br>
+        {% for practica in practicas %}
+            <li>{{practica.nombre}} - {{practica.asignatura}}</li>
+                <br>
+                <button class="btn btn-dark">
+                    <a href="{% url 'practica' practica.id %}" class="btn-link">Ver</a>
+                </button>
+                <button class="btn btn-dark">
+                    <a href="{% url 'practica_editar' practica.id %}" class="btn-link">Editar</a>
+                </button>
+                <button class="btn btn-dark">
+                    <a href="{% url 'practica_borrar' practica.id %}" class="btn-link">Eliminar</a>
+                </button>
+                <br>
+                <br>
+        {% endfor %}
+    </ul>
     <br>
-    <a href="{% url 'practica_crear' %}">Agregar otra práctica</a>
+    <a href="{% url 'practica_crear' %}" class="btn btn-success">Agregar otra práctica</a>
+</div>
 
 {% endblock %}

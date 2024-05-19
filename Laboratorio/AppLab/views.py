@@ -181,3 +181,7 @@ def buscar(request):
     miFormulario = FormularioBuscar()
     
     return render(request, "AppLab/buscar.html", {"FormularioBuscar": miFormulario, "practicas": practicas})
+
+
+def about(request):
+    return render(request, 'AppLab/acercaDeMi.html', {})

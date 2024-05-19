@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
+from .models import UserProfile
 
 class FormularioEstudiante(forms.Form):
 
@@ -34,12 +35,27 @@ class FormularioRegistroUsuario(UserCreationForm):
     username = forms.CharField(max_length=20, label="Nombre de Usuario", widget=forms.TextInput)
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Repetir contraseña", widget=forms.PasswordInput)
+    avatar = forms.ImageField(required=False)
  
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2', 'avatar']
         # Saca los mensajes de ayuda
         help_texts = {k:"" for k in fields}
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+            avatar = self.cleaned_data.get('avatar')
+            if avatar:
+                UserProfile.objects.create(user=user, avatar=avatar)
+            else:
+                UserProfile.objects.create(user=user)
+        return user
 
 
 class FormularioEdicionUsuario(UserChangeForm):

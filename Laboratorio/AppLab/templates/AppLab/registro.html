@@ -10,7 +10,7 @@
 
     <div class="container">
         <div class="form-group">
-        <form style=" width: 50vw; margin-left : 15vw;" method="post">
+        <form style=" width: 50vw; margin-left : 15vw;" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{form.as_p}}
             <div class="container text-center">
@@ -20,7 +20,7 @@
     </div>
     <br>
     <div class="container text-center">
-    <p>¿Ya tenés una cuenta? <a href="{% url 'login' %}">Iniciar Sesión</a></p>
+        <p>¿Ya tenés una cuenta? <a href="{% url 'login' %}">Iniciar Sesión</a></p>
     </div>
 </div>
 

@@ -44,6 +44,13 @@ class Registro(FormView):
             return redirect('inicio')
         return super(Registro, self).get(*args, **kwargs)
     
+    def post(self, request, *args, **kwargs):
+        form = self.get_form(self.get_form_class())
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+    
 
 class UsuarioEditar(UpdateView):
     form_class = FormularioEdicionUsuario
